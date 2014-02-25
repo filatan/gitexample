@@ -1,0 +1,80 @@
+Create database if not exists ejercicio1;
+use ejercicio1;
+
+
+CREATE TABLE Manufacturers (
+  Code INTEGER,
+  Name VARCHAR(255) NOT NULL,
+  PRIMARY KEY (Code)   
+);
+
+CREATE TABLE Products (
+  Code INTEGER,
+  Name VARCHAR(255) NOT NULL ,
+  Price DECIMAL NOT NULL ,
+  Manufacturer INTEGER NOT NULL,
+  PRIMARY KEY (Code), 
+  FOREIGN KEY (Manufacturer) REFERENCES Manufacturers(Code)
+) ENGINE=INNODB;
+
+INSERT INTO Manufacturers(Code,Name) VALUES(1,'Sony');
+INSERT INTO Manufacturers(Code,Name) VALUES(2,'Creative Labs');
+INSERT INTO Manufacturers(Code,Name) VALUES(3,'Hewlett-Packard');
+INSERT INTO Manufacturers(Code,Name) VALUES(4,'Iomega');
+INSERT INTO Manufacturers(Code,Name) VALUES(5,'Fujitsu');
+INSERT INTO Manufacturers(Code,Name) VALUES(6,'Winchester');
+
+INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(1,'Hard drive',240,5);
+INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(2,'Memory',120,6);
+INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(3,'ZIP drive',150,4);
+INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(4,'Floppy disk',5,6);
+INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(5,'Monitor',240,1);
+INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(6,'DVD drive',180,2);
+INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(7,'CD drive',90,2);
+INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(8,'Printer',270,3);
+INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(9,'Toner cartridge',66,3);
+INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(10,'DVD burner',180,2);
+
+
+SELECT Name FROM Products;
+SELECT name from Products where price <= 200;
+SELECT * From Products where price > 60 and price <200;
+Select name, price*100 from products;
+select avg(price) from products;
+select avg(price) from Products where Manfacturer = 2;
+select count(price) from products where price >= 180;
+select name, price from products order by price desc, name;
+SELECT * FROM Products, Manufacturers WHERE Products.Manufacturer = Manufacturers.Code;
+select name, price from products inner join Manufacturers;
+select avg(price), manufacturer from product group by (manufacturer);
+select avg(price), manufacturers.name from products inner join Manufacturers 
+on manufacturers.code = products.manufacturer  group by (manufacturers.name);
+
+SELECT AVG(Price), Manufacturers.Name FROM Products INNER JOIN Manufacturers 
+ON Products.Manufacturer = Manufacturers.Code   GROUP BY Manufacturers.Name HAVING AVG(Price) >= 150;
+
+select name, min(price) from products;
+
+select products.name, manufacturers.name, max(price) from manufacturers 
+inner join products where products.manufacturer = manufacturers.code;
+
+
+insert into products values (NULL, 'loudspeaker', 70, 2);
+
+update products set name ='Laser printer' where code = 8;
+update products set price = price * 0.9;
+update products set price = price * 0.9 where price >= 200;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
